@@ -16,8 +16,8 @@ class Save extends FormRequest
     {
         // + ignore on edit
         return [
-            'url' => ['required', 'min:4', 'max:64', Rule::unique('tags') ],
-            'title' => ['required', 'min:4', 'max:64', Rule::unique('tags') ],
+            'url' => ['required', 'min:4', 'max:64', 'unique' => Rule::unique('tags') ],
+            'title' => ['required', 'min:4', 'max:64', 'unique' => Rule::unique('tags') ],
             'description' => 'nullable|min:4'
         ];
     }

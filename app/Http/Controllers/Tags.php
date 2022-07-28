@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Tags\Save as SaveRequest;
+use App\Http\Requests\Tags\Update as UpdateRequest;
+
 use App\Models\Tag;
 
 class Tags extends Controller
@@ -36,7 +38,7 @@ class Tags extends Controller
         return view('tags.edit', compact('tag'));
     }
 
-    public function update(SaveRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $data = $request->validated();
         $tag = Tag::findOrFail($id);

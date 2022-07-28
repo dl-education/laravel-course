@@ -1,7 +1,7 @@
-<x-layouts.base title="Create new post">
-    @bind($post)
-        <x-form method="put" action="{{ route('posts.update', [ $post->id ]) }}">
-            @include('posts.form-fields')
+<x-layouts.base title="Edit video">
+    @bind($video)
+        <x-form method="put" action="{{ route('videos.update', [ $video->id ]) }}">
+            @include('videos.form-fields')
             <button>Send</button>
         </x-form>
     @endbind
