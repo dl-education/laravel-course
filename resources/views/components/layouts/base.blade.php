@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css\app.css', 'resources/js/app.js'])
 </head>
 <body class="app-grid">
     <header>
@@ -26,14 +26,18 @@
                             <a href="{{ route('home') }}" class="nav-link link-dark">Главная</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('tags.index') }}" class="nav-link link-dark">Теги</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('posts.index') }}" class="nav-link link-dark">Блог</a>
                         </li>
                         <li>
-                            
+                            <a href="{{ route('videos.index') }}" class="nav-link link-dark">Видео</a>
                         </li>
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
+                    <x-notifications />
                     <h1 class="h3 mb-4">{{ $title }}</h1>
                     {{ $slot }}
                 </main>

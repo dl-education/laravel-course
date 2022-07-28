@@ -1,9 +1,0 @@
-- директива @vite для вывода статики
-- тег h1 в layouts.base = $title
-- немного вёрстки layouts.base
-- страница blog.index
-- comments.store back redirect
-- немного вёрстки комментов в post.show + link на edit
-- comments edit page
-- comments update request
-- rename comments add request to comments store request

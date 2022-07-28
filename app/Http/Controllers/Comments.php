@@ -17,6 +17,11 @@ class Comments extends Controller
         'video' => Video::class
     ];
 
+    const MODELS_REDIRECT = [
+        Post::class => 'posts.show',
+        Video::class => 'videos.show',
+    ];
+
     public function index()
     {
         //
@@ -50,7 +55,11 @@ class Comments extends Controller
     {
         $comment = Comment::findOrFail($id);
         $comment->update($request->validated());
-        return redirect()->route('home');
+        session()->flash('notification', 'comments.updated');
+        return redirect()->route(
+            self::MODELS_REDIRECT[$comment->commentable_type], 
+            [ $comment->commentable_id ]
+        );
     }
 
     public function destroy($id)

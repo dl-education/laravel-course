@@ -1,0 +1,12 @@
+select count(*) as aggregate from `tags` where `id` = ? // ["1"]
+
+select count(*) as aggregate from `tags` where `id` = ? // ["2"]
+
+select count(*) as aggregate from `tags` where `id` = ? // ["4"]
+
+select * from `posts` where `posts`.`id` = ? and `posts`.`deleted_at` is null limit 1 // ["9"]
+
+select `title`, `id` from `tags` order by `title` desc // []
+
+select `tags`.`id` from `tags` inner join `post_tag` on `tags`.`id` = `post_tag`.`tag_id` where `post_tag`.`post_id` = ? // [9]
+

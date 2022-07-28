@@ -25,7 +25,9 @@ class Save extends FormRequest
     {
         return [
             'title' => 'required|min:10',
-            'content' => 'required|max:256'
+            'content' => 'required|max:256',
+            'tags' => 'required|array|min:1',
+            //'tags.*' => 'exists:tags'
         ];
     }
 
@@ -33,14 +35,16 @@ class Save extends FormRequest
     {
         return [
             'title' => 'Заголовок',
-            'content' => 'Текст поста'
+            'content' => 'Текст поста',
+            'tags' => 'Список тегов'
         ];
     }
 
     public function messages()
     {
         return [
-            'title.min' => 'Слишком коротко! 10 давай'
+            'title.min' => 'Слишком коротко! 10 давай',
+            'tags.required' => 'Хотя бы 1 тег'
         ];
     }
 }
