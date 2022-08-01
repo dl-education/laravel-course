@@ -6,6 +6,7 @@
         <em>{{ $post->created_at }}</em><br>
         <a href="/posts/{{ $post->id }}">more...</a>
         <div>commets: {{ $post->comments_count }}</div>
+        <x-tags :tags="$post->tags"/>
         <hr>
     @endforeach
 </x-layouts.base>

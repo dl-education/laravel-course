@@ -12,7 +12,10 @@ class Posts extends Controller
     public function index()
     {
         return view('posts.index', [
-            'posts' => Post::withCount('comments')->orderByDesc('created_at')->get()
+            'posts' => Post::withCount('comments')
+                ->with('tags')
+                ->orderByDesc('created_at')
+                ->get()
         ]);
     }
 
@@ -34,7 +37,7 @@ class Posts extends Controller
 
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::with('tags')->findOrFail($id);
         return view('posts.show', compact('post'));
     }
 
