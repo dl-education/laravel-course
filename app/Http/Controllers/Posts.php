@@ -15,7 +15,7 @@ class Posts extends Controller
             'posts' => Post::withCount('comments')
                 ->with('tags')
                 ->orderByDesc('created_at')
-                ->get()
+                ->paginate(2)
         ]);
     }
 

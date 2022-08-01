@@ -9,4 +9,5 @@
         <x-tags :tags="$post->tags"/>
         <hr>
     @endforeach
+    {{ $posts->links() }}
 </x-layouts.base>
