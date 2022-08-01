@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 
@@ -30,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
             print_r($params);
             echo "</pre>";
         }); */
+        Paginator::useBootstrap();
     }
 }

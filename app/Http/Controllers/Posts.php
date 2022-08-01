@@ -2,79 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Posts\Save as SaveRequest;
-use App\Models\Post;
-use App\Models\Tag;
-use App\Enums\Post\Status as PostStatus;
+use App\Enums\Comment\Status as CommentStatus;
+use App\Models\Post as MPost;
+use App\Models\Tag as MTag;
 
 class Posts extends Controller
 {
     public function index()
     {
-        return view('posts.index', [ 
-            'posts' => Post::withCount('comments')->orderByDesc('created_at')->get()
-        ]);
+        return view('user.posts.index', ['posts' => MPost::orderByDesc('created_at')->paginate(5)]);
     }
 
-    public function create()
+    public function show($slug)
     {
-        return view('posts.create', [
-            'tags' => Tag::orderByDesc('title')->pluck('title', 'id')
-        ]);
+        $post = MPost::where('slug', $slug)->with(['comments' => function($query) {
+            $query->where('status', CommentStatus::ACCEPT);
+        }])->firstOrFail();
+        return view('user.posts.show', compact('post'));
     }
 
-    public function store(SaveRequest $request)
+    public function showPostsForTag($url)
     {
-        $data = $request->validated();
-        $post = Post::create($data);
-
-        try{
-            $post->tags()->sync($data['tags']);
-        }
-        catch(\Throwable $e){
-            session()->flash('notification', 'posts.tags.sync');
-        }
-        
-        return redirect()->route('posts.show', [ $post->id ]);
+        $tag = MTag::where('url', $url)->with('posts')->firstOrFail();
+        return view('user.tags.show', compact('tag'));
     }
 
-    public function show($id)
+    public function showTags()
     {
-        $post = Post::findOrFail($id);
-        return view('posts.show', compact('post'));
+        $tags = MTag::paginate(5);
+        return view('user.tags.index', compact('tags'));
     }
-
-    public function edit($id)
-    {
-        $post = Post::findOrFail($id);
-        $tags = Tag::orderByDesc('title')->pluck('title', 'id');
-        return view('posts.edit', compact('post', 'tags'));
-    }
-
-    public function update(SaveRequest $request, $id)
-    {
-        $data = $request->validated();
-        $post = Post::findOrFail($id);
-        $post->update($data);
-
-        try{
-            $post->tags()->sync($data['tags']);
-        }
-        catch(\Throwable $e){
-            session()->flash('notification', 'posts.tags.sync');
-        }
-
-        return redirect()->route('posts.show', [ $post->id ]);
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
-
-    /* public function approve($id){
-        $post = Post::findOrFail($id);
-        $post->status = PostStatus::APPROVED;
-        $post->save();
-    } */
 }

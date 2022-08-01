@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Posts;
 
+use App\Models\Tag as MTag;
+use App\Rules\CheckArray;
 use Illuminate\Foundation\Http\FormRequest;
 
 class Save extends FormRequest
@@ -24,10 +26,11 @@ class Save extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:10',
+            'title' => 'required|min:5|max:100',
             'content' => 'required|max:256',
-            'tags' => 'required|array|min:1',
-            //'tags.*' => 'exists:tags'
+            'slug' => 'required|min:2|max:64',
+            'category_id' => 'required',
+            'tags' => ['required', 'array','min:1', new CheckArray(MTag::class)]
         ];
     }
 
@@ -36,15 +39,16 @@ class Save extends FormRequest
         return [
             'title' => 'Заголовок',
             'content' => 'Текст поста',
-            'tags' => 'Список тегов'
+            'slug' => 'Идентификатор поста',
+            'tags' => 'Теги'
         ];
     }
 
     public function messages()
     {
         return [
-            'title.min' => 'Слишком коротко! 10 давай',
-            'tags.required' => 'Хотя бы 1 тег'
+            'title.min' => 'Короткое имя',
+            'tags.required' => 'Выберите хотя бы один тег'
         ];
     }
 }
