@@ -10,14 +10,24 @@ use App\Casts\Base64Json;
 
 class Post extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = [
+        'title',
+        'content',
+        'slug',
+        'category_id'
+    ];
+
     protected $casts = [
         'status' => Status::class,
         'options' => Base64Json::class
     ];
+
+    public function category ()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function comments()
     {

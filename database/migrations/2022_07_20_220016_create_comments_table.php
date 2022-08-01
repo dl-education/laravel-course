@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->morphs('commentable');
             $table->string('text', 256);
+            $table->tinyInteger('status')->default(0);
         });
     }
 

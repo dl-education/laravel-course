@@ -7,27 +7,37 @@ use Illuminate\Validation\Rule;
 
 class Save extends FormRequest
 {
+      /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize()
     {
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
     public function rules()
     {
-        // + ignore on edit
         return [
             'url' => ['required', 'min:4', 'max:64', 'unique' => Rule::unique('tags') ],
             'title' => ['required', 'min:4', 'max:64', 'unique' => Rule::unique('tags') ],
-            'description' => 'nullable|min:4'
+            'description' => ['nullable','min:4'],
         ];
     }
 
     public function attributes()
     {
         return [
-            'url' => 'Url тега',
+            'url' => 'url тега',
             'title' => 'Название тега',
             'description' => 'Описание тега'
         ];
     }
+
 }

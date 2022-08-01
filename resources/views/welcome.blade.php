@@ -1,5 +1,5 @@
-<x-layouts.base title="Create new post">
+<x-layouts.base title="Главная">
     <div class="alert alert-info">
-        Привет! Меню слева поможет ориентироваться.
+        Добро пожаловать!!!
     </div>
 </x-layouts.base>

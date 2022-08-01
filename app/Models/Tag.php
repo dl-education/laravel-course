@@ -9,7 +9,11 @@ class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'title', 'description'];
+    protected $fillable = [
+        'url',
+        'title',
+        'description'
+    ];
 
     public function posts()
     {
