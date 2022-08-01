@@ -4,7 +4,7 @@
 ])
 
 <span class="badge bg-info">
-    <a href="{{ $url }}">
+    <a href="{{ route('tags.showPosts', [$url]) }}">
         {{ $title }}
     </a>
 </span>

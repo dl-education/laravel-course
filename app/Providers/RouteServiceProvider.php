@@ -54,5 +54,6 @@ class RouteServiceProvider extends ServiceProvider
     protected function configurePatterns()
     {
         Route::pattern('id', '[1-9]+[0-9]*');
+        Route::pattern('url', '[a-z0-9-_]+');
     }
 }

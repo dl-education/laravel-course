@@ -11,6 +11,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('tags', Tags::class)->parameters(['tags' => 'id']);
+Route::get('/tags/{url}/posts', [Tags::class, 'showPosts'])->name('tags.showPosts');
 Route::resource('posts', Posts::class)->parameters(['posts' => 'id']);
 Route::resource('videos', Videos::class)->parameters(['videos' => 'id']);
 Route::resource('comments', Comments::class)->parameters(['comments' => 'id']);
