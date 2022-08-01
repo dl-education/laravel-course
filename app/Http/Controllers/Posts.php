@@ -11,7 +11,7 @@ class Posts extends Controller
 {
     public function index()
     {
-        return view('posts.index', [ 
+        return view('posts.index', [
             'posts' => Post::withCount('comments')->orderByDesc('created_at')->get()
         ]);
     }
@@ -27,14 +27,8 @@ class Posts extends Controller
     {
         $data = $request->validated();
         $post = Post::create($data);
+        $post->tags()->sync($data['tags']);
 
-        try{
-            $post->tags()->sync($data['tags']);
-        }
-        catch(\Throwable $e){
-            session()->flash('notification', 'posts.tags.sync');
-        }
-        
         return redirect()->route('posts.show', [ $post->id ]);
     }
 
