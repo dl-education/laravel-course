@@ -53,7 +53,7 @@ class Tags extends Controller
 
     public function showPosts($url)
     {
-        $tag = Tag::with('posts')->where('url', $url)->firstOrFail();
+        $tag = Tag::where('url', $url)->firstOrFail();
         return view('tags.show-posts', compact('tag'));
     }
 
