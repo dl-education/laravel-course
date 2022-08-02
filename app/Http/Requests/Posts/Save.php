@@ -4,6 +4,7 @@ namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Rules\ExistsTags;
 
 class Save extends FormRequest
 {
@@ -27,8 +28,8 @@ class Save extends FormRequest
         return [
             'title' => 'required|min:10',
             'content' => 'required|max:256',
-            'tags' => 'required|array|min:1',
-            'tags.*' => [Rule::exists('tags', 'id')]
+            'tags' => ['required', 'array', 'min:1', new ExistsTags],
+            //'tags.*' => [Rule::exists('tags', 'id')]
         ];
     }
 
@@ -38,7 +39,7 @@ class Save extends FormRequest
             'title' => 'Заголовок',
             'content' => 'Текст поста',
             'tags' => '"Список тегов"',
-            'tags.*' => 'Список тегов'
+            //'tags.*' => 'Список тегов'
         ];
     }
 
@@ -47,16 +48,16 @@ class Save extends FormRequest
         return [
             'title.min' => 'Слишком коротко! 10 давай',
             'tags.required' => 'Хотя бы 1 тег',
-            'tags.*.exists' => 'Такого тега не существует'
+            //'tags.*.exists' => 'Такого тега не существует'
         ];
     }
 
-    public function withValidator($validator)
+/*    public function withValidator($validator)
     {
         $validator->after(function ($validator) {
             if ($validator->errors()->has('tags.*')) {
                 $validator->errors()->add('tags', $validator->errors()->first('tags.*'));
             }
         });
-    }
+    }*/
 }
