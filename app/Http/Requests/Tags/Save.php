@@ -16,8 +16,8 @@ class Save extends FormRequest
     {
         // + ignore on edit
         return [
-            'url' => ['required', 'min:4', 'max:64', 'unique' => Rule::unique('tags') ],
-            'title' => ['required', 'min:4', 'max:64', 'unique' => Rule::unique('tags') ],
+            'url' => ['required', 'min:4', 'max:64', $this->makeUniqueRule()],
+            'title' => ['required', 'min:4', 'max:64', $this->makeUniqueRule()],
             'description' => 'nullable|min:4'
         ];
     }
@@ -29,5 +29,9 @@ class Save extends FormRequest
             'title' => 'Название тега',
             'description' => 'Описание тега'
         ];
+    }
+
+    protected function makeUniqueRule(){
+        return Rule::unique('tags');
     }
 }
