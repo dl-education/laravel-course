@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Posts;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\AllInModel;
+use App\Models\Tag;
 
 class Save extends FormRequest
 {
@@ -26,8 +28,7 @@ class Save extends FormRequest
         return [
             'title' => 'required|min:10',
             'content' => 'required|max:256',
-            'tags' => 'required|array|min:1',
-            //'tags.*' => 'exists:tags'
+            'tags' => [ 'required', 'array', 'min:1', new AllInModel(Tag::class) ]
         ];
     }
 
