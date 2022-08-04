@@ -24,12 +24,7 @@ class Comments extends Controller
 
     public function index()
     {
-        return view('admin.comments.index', 
-        [
-            'comments' => MComment::with('commentable')->where('status', CommentStatus::DEFAULT)->orderByDesc('created_at')->paginate(5),
-            'checkCommentsDeclined' => MComment::with('commentable')->where('status',  CommentStatus::DECLINE)->count(),
-            'checkCommentsAccepted' => MComment::with('commentable')->where('status',  CommentStatus::ACCEPT)->count(),
-        ]);
+       abort(404);
     }
 
     public function store(StoreRequest $request)
@@ -57,22 +52,6 @@ class Comments extends Controller
     public function destroy($id)
     {
         MComment::findOrFail($id)->delete();
-        return redirect()->back();
-    }
-
-    public function acceptComment($id)
-    {
-        $comment = Mcomment::findOrfail($id);
-        $comment->status = CommentStatus::ACCEPT;
-        $comment->save();
-        return redirect()->back();
-    }
-    
-    public function declineComment($id)
-    {
-        $comment = Mcomment::findOrfail($id);
-        $comment->status = CommentStatus::DECLINE;
-        $comment->save();
         return redirect()->back();
     }
 

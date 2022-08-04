@@ -19,7 +19,10 @@ Route::get('/', function () {
 Route::prefix('/admin')->group( function () {
     Route::get('/', [ MainAdminController::class, 'index' ])->name('main.admin');
     Route::get('/declinedComments', [ MainAdminController::class, 'declinedComments'])->name('comment.declined');
+    Route::get('/newComments', [ MainAdminController::class, 'showNewComments'])->name('comment.new');
     Route::get('/acceptedComments', [ MainAdminController::class, 'acceptedComments'])->name('comment.accepted');
+    Route::get('/comment/{id}/accept', [ MainAdminController::class, 'acceptComment'])->name('accept.comment');
+    Route::get('/comment/{id}/decline', [ MainAdminController::class, 'declineComment'])->name('decline.comment');
         Route::prefix('/trush')->group( function () {
             Route::get('/', [ TrushCategoryController::class, 'index'])->name('trush');
             Route::delete('/{id}/deleteForever', [ TrushCategoryController::class, 'deleteForever'])->name('deleteForever');
@@ -33,11 +36,10 @@ Route::prefix('/admin')->group( function () {
     Route::resource('/tags', TagsAdminController::class)->parameters(['tags' => 'id']);
     
     
-    Route::get('/comments/{id}/accept', [ CommentController::class, 'acceptComment'])->name('accept.comment');
-    Route::get('/comments/{id}/decline', [ CommentController::class, 'declineComment'])->name('decline.comment');
-    Route::resource('/comments', CommentController::class)->only(['index','store', 'edit', 'update', 'destroy'])->parameters([ 'comments' => 'id' ]);
+   
 });
 
+Route::resource('/comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy'])->parameters([ 'comments' => 'id' ]);
 
 Route::get('/posts', [ PostsController::class, 'index'])->name('post.all');
 Route::get('/post/{slug}', [ PostsController::class, 'show' ])->name('post.one');
