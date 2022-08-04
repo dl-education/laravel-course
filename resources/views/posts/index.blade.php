@@ -8,4 +8,6 @@
         <div>commets: {{ $post->comments_count }}</div>
         <hr>
     @endforeach
+    <hr>
+    {{ $posts->links() }}
 </x-layouts.base>
