@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Posts as PostsAdminController;
 use App\Http\Controllers\Admin\Trush as TrushCategoryController;
 use App\Http\Controllers\Admin\Video as VideoAdminController;
 use App\Http\Controllers\Admin\Tag as TagsAdminController;
+use App\Http\Controllers\Auth\Session;
 use App\Http\Controllers\Posts as PostsController;
 use App\Http\Controllers\Video as VideoController;
 
@@ -48,3 +49,7 @@ Route::get('/tags', [ PostsController::class, 'showTags' ])->name('tags.all');
 Route::get('/videos', [ VideoController::class, 'index'])->name('video.all');
 Route::get('/video/{slug}', [ VideoController::class, 'show'])->name('video.one');
 
+Route::controller(Session::class)->group(function() {
+    Route::get('/auth/login', 'create')->name('login');
+    Route::post('/auth/login/store', 'store')->name('login.store');
+});

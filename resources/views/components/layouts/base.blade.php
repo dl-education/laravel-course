@@ -10,7 +10,7 @@
 <body class="app-grid">
     <header>
         <div class="container py-3 mb-4 border-bottom">
-            header
+            
         </div>
     </header>
     <div>
@@ -26,6 +26,7 @@
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
+                    
                     <x-admin.notifications/>
                     <h1 class="h3 mb-4">{{ $title }}</h1>
                     {{ $slot }}
