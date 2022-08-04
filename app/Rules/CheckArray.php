@@ -22,9 +22,8 @@ class CheckArray implements Rule
             }
         }
         
-        $tags = $this->model::pluck('id')->toArray();
-        $checkableArray = array_diff($array, $tags);
-        return empty($checkableArray) ? true : false;
+        $cnt = $this->model::whereIn('id', $array)->count();
+        return $cnt === count($array);
     }
 
     /**
