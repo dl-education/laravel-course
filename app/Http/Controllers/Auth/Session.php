@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Login as LoginRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Session extends Controller
 {
@@ -16,11 +18,22 @@ class Session extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-        return redirect('/');
+        return redirect()->route('home');
     }
 
-    public function destroy()
+    public function exit()
     {
+        return view('auth.logout');
+    }
 
+    public function destroy(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

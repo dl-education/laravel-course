@@ -8,8 +8,15 @@
     
     <h2>Комментарии</h2>
         <x-nav.show-comments :model="$post"/>
-    <hr class="mb-5">
+    @auth
+        <hr class="mb-5">
         <x-nav.send-comment :model="$post"/>
+    @else
+    <div class="text-center">
+        <b><em >Зарегистрируйтесь что бы коментировать</em></b>
+    </div>
+    @endauth
+    <hr>
     <b>Категория</b> <em>{{ $post->category->name }}</em>
    
 </x-layouts.base>

@@ -9,8 +9,15 @@
 </head>
 <body class="app-grid">
     <header>
-        <div class="container py-3 mb-4 border-bottom">
-            
+        <div class="container py-3 mb-2 border-bottom">
+            <ul class="nav nav-pills justify-content-end">
+                @guest
+                    <x-nav.navlink route-name="login">Войти</x-nav.navlink>
+                @else
+                    <x-nav.navlink route-name="home">Личный кабинет</x-nav.navlink>
+                    <x-nav.navlink route-name="login.exit">Выйти</x-nav.navlink>
+                @endguest
+            </ul>
         </div>
     </header>
     <div>
@@ -19,7 +26,9 @@
                 <div class="col col-12 col-md-3">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <x-nav.navlink route-name="home">Главная</x-nav.navlink>
-                        <x-nav.navlink route-name="main.admin" >Администрирование</x-nav.navlink>
+                        @auth
+                            <x-nav.navlink route-name="main.admin" >Администрирование</x-nav.navlink>    
+                        @endauth
                         <x-nav.navlink route-name="tags.all" >Теги</x-nav.navlink>
                         <x-nav.navlink route-name="post.all" >Посты</x-nav.navlink>
                         <x-nav.navlink route-name="video.all" >Видео</x-nav.navlink>

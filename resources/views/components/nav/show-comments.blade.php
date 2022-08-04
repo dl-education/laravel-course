@@ -9,6 +9,8 @@
                     </x-form>
                 @endif
             <div class="mt-2">{{ $comment->text }}</div>
-            <a href="{{ route('comments.edit', [ $comment->id ]) }}">Исправить</a>
+            @auth
+                <a href="{{ route('comments.edit', [ $comment->id ]) }}">Исправить</a>
+            @endauth
         </div>
 @endforeach

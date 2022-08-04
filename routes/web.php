@@ -17,7 +17,7 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::prefix('/admin')->group( function () {
+Route::prefix('/admin')->middleware(['auth'])->group( function () {
     Route::get('/', [ MainAdminController::class, 'index' ])->name('main.admin');
     Route::get('/declinedComments', [ MainAdminController::class, 'declinedComments'])->name('comment.declined');
     Route::get('/newComments', [ MainAdminController::class, 'showNewComments'])->name('comment.new');
@@ -35,12 +35,10 @@ Route::prefix('/admin')->group( function () {
     Route::resource('/posts', PostsAdminController::class)->parameters(['posts' => 'id']);
     Route::resource('/video', VideoAdminController::class)->parameters(['video' => 'id']);
     Route::resource('/tags', TagsAdminController::class)->parameters(['tags' => 'id']);
-    
-    
-   
+      
 });
 
-Route::resource('/comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy'])->parameters([ 'comments' => 'id' ]);
+Route::resource('/comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy'])->parameters([ 'comments' => 'id' ])->middleware(['auth']);
 
 Route::get('/posts', [ PostsController::class, 'index'])->name('post.all');
 Route::get('/post/{slug}', [ PostsController::class, 'show' ])->name('post.one');
@@ -50,6 +48,12 @@ Route::get('/videos', [ VideoController::class, 'index'])->name('video.all');
 Route::get('/video/{slug}', [ VideoController::class, 'show'])->name('video.one');
 
 Route::controller(Session::class)->group(function() {
-    Route::get('/auth/login', 'create')->name('login');
-    Route::post('/auth/login/store', 'store')->name('login.store');
+    Route::middleware('guest')->group(function() {
+        Route::get('/auth/login', 'create')->name('login');
+        Route::post('/auth/login', 'store')->name('login.store');
+    });
+    Route::middleware('auth')->group(function() {
+        Route::get('/auth/logout', 'exit')->name('login.exit');
+        Route::delete('/auth/logout', 'destroy')->name('login.destroy');
+    });
 });

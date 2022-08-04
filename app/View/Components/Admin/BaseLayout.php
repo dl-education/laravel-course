@@ -8,10 +8,11 @@ use Illuminate\View\Component;
 class BaseLayout extends Component
 {
     public bool $checkTrash;
-
-    public function __construct()
+    public string $title;
+    public function __construct(string $title='Админ панель')
     {
         $this->checkTrash = MPost::onlyTrashed()->get()->isEmpty();
+        $this->title = $title;
     }
 
     

@@ -1,3 +1,4 @@
+  <h1>{{ $title }}</h1>
   <ul class="nav nav-tabs">
       <x-nav.navlink route-name="categories.index">Категории</x-nav.navlink>
       <x-nav.navlink route-name="tags.index" >Теги</x-nav.navlink>

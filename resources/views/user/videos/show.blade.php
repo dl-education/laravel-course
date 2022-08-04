@@ -8,8 +8,14 @@
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
-    <h4>Комментарии</h4>
-    <x-nav.show-comments :model="$video"/>
-    <hr class="mb-5">
-    <x-nav.send-comment :model="$video"/>
+    <h2>Комментарии</h2>
+        <x-nav.show-comments :model="$video"/>
+    @auth
+        <hr class="mb-5">
+        <x-nav.send-comment :model="$video"/>
+    @else
+    <div class="text-center mb-2">
+        <b><em>Зарегистрируйтесь что бы коментировать</em></b>
+    </div>
+    @endauth
 </x-layouts.base>
