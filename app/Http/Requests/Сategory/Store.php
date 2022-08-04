@@ -20,7 +20,7 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:2', 'max:50', 'unique'=> Rule::unique('categories')],
+            'name' => ['required', 'min:2', 'max:50', $this->makeUniqueRule()],
             'description' => ['required', 'min:10']
         ];
     }
@@ -31,5 +31,9 @@ class Store extends FormRequest
             'name' => 'Имя',
             'description' => 'Описание'
         ];
+    }
+
+    protected function makeUniqueRule(){
+        return Rule::unique('categories');
     }
 }
