@@ -27,14 +27,7 @@ class Posts extends Controller
     {
         $data = $request->validated();
         $post = Post::create($data);
-
-        try{
-            $post->tags()->sync($data['tags']);
-        }
-        catch(\Throwable $e){
-            session()->flash('notification', 'posts.tags.sync');
-        }
-        
+        $post->tags()->sync($data['tags']);
         return redirect()->route('posts.show', [ $post->id ]);
     }
 
@@ -57,13 +50,6 @@ class Posts extends Controller
         $post = Post::findOrFail($id);
         $post->update($data);
         $post->tags()->sync($data['tags']);
-        /* try{
-            $post->tags()->sync($data['tags']);
-        }
-        catch(\Throwable $e){
-            session()->flash('notification', 'posts.tags.sync');
-        } */
-
         return redirect()->route('posts.show', [ $post->id ]);
     }
 
