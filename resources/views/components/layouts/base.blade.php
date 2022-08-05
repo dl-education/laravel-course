@@ -13,8 +13,9 @@
             <ul class="nav nav-pills justify-content-end">
                 @guest
                     <x-nav.navlink route-name="login">Войти</x-nav.navlink>
+                    <x-nav.navlink route-name="register">Регистрация</x-nav.navlink>
                 @else
-                    <x-nav.navlink route-name="home">Личный кабинет</x-nav.navlink>
+                    <x-nav.navlink route-name="profile.index">Личный кабинет</x-nav.navlink>
                     <x-nav.navlink route-name="login.exit">Выйти</x-nav.navlink>
                 @endguest
             </ul>

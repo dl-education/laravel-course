@@ -8,8 +8,10 @@ use App\Http\Controllers\Admin\Posts as PostsAdminController;
 use App\Http\Controllers\Admin\Trush as TrushCategoryController;
 use App\Http\Controllers\Admin\Video as VideoAdminController;
 use App\Http\Controllers\Admin\Tag as TagsAdminController;
-use App\Http\Controllers\Auth\Session;
+use App\Http\Controllers\Auth\Register as RegisterController;
+use App\Http\Controllers\Auth\Session as SessionController;
 use App\Http\Controllers\Posts as PostsController;
+use App\Http\Controllers\Profile as ProfileController;
 use App\Http\Controllers\Video as VideoController;
 
 Route::get('/', function () {
@@ -47,7 +49,7 @@ Route::get('/tags', [ PostsController::class, 'showTags' ])->name('tags.all');
 Route::get('/videos', [ VideoController::class, 'index'])->name('video.all');
 Route::get('/video/{slug}', [ VideoController::class, 'show'])->name('video.one');
 
-Route::controller(Session::class)->group(function() {
+Route::controller(SessionController::class)->group(function() {
     Route::middleware('guest')->group(function() {
         Route::get('/auth/login', 'create')->name('login');
         Route::post('/auth/login', 'store')->name('login.store');
@@ -57,3 +59,16 @@ Route::controller(Session::class)->group(function() {
         Route::delete('/auth/logout', 'destroy')->name('login.destroy');
     });
 });
+
+Route::controller(RegisterController::class)->middleware('guest')->group(function() {
+    Route::get('/auth/register', 'create')->name('register');
+    Route::post('/auth/register', 'store')->name('register.store');
+});
+
+Route::prefix('/profile')->middleware('auth')->group(function() {
+    Route::get('/',[ ProfileController::class, 'index' ])->name('profile.index');
+    Route::get('/password/edit', [ ProfileController::class, 'editPassword' ])->name('password.edit');
+    Route::put('/password/update', [ ProfileController::class, 'updatePassword' ])->name('password.update');
+});
+
+

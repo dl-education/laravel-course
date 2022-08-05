@@ -121,6 +121,8 @@ return [
     'custom'               => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'password' => 'пароль',
+            'current_password' => 'текущий пароль'
         ],
     ],
 ];

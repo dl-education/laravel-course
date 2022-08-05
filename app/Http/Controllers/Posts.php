@@ -10,7 +10,7 @@ class Posts extends Controller
 {
     public function index()
     {
-        return view('user.posts.index', ['posts' => MPost::orderByDesc('created_at')->paginate(5)]);
+        return view('user.posts.index', ['posts' => MPost::withCount('comments')->orderByDesc('created_at')->paginate(5)]);
     }
 
     public function show($slug)
