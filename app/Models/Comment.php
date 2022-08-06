@@ -15,4 +15,11 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
+
+    public function scopeAccept($query, $param)
+    {
+        return function ($query) use ($param) {
+            $query->where('status', $param);
+        };
+    }
 }

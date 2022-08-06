@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Comment\Status as CommentStatus;
+use App\Models\Comment;
 use App\Models\Video as MVideo;
 
 
@@ -15,9 +16,7 @@ class Video extends Controller
 
     public function show($slug)
     {
-        $video = MVideo::where('slug', $slug)->with(['comments' => function($query) {
-            $query->where('status', CommentStatus::ACCEPT);
-        }])->firstOrFail();
+        $video = MVideo::where('slug', $slug)->with(['comments' => Comment::accept(CommentStatus::ACCEPT)])->firstOrFail();
         return view('user.videos.show', compact('video'));
     }
 
