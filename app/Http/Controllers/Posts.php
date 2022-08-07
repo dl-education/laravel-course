@@ -11,12 +11,8 @@ class Posts extends Controller
 {
     public function index()
     {
-        return view('posts.index', [
-            'posts' => Post::withCount('comments')
-                ->with('tags')
-                ->orderByDesc('created_at')
-                ->paginate(2)
-        ]);
+        $posts = Post::withCount('comments')->orderByDesc('created_at')->paginate(3);
+        return view('posts.index', compact('posts'));
     }
 
     public function create()
@@ -31,7 +27,6 @@ class Posts extends Controller
         $data = $request->validated();
         $post = Post::create($data);
         $post->tags()->sync($data['tags']);
-
         return redirect()->route('posts.show', [ $post->id ]);
     }
 
@@ -53,14 +48,7 @@ class Posts extends Controller
         $data = $request->validated();
         $post = Post::findOrFail($id);
         $post->update($data);
-
-        try{
-            $post->tags()->sync($data['tags']);
-        }
-        catch(\Throwable $e){
-            session()->flash('notification', 'posts.tags.sync');
-        }
-
+        $post->tags()->sync($data['tags']);
         return redirect()->route('posts.show', [ $post->id ]);
     }
 

@@ -15,6 +15,11 @@
     <header>
         <div class="container py-3 mb-4 border-bottom">
             header
+            @auth
+                <a href="{{ route('login.exit') }}">Logout</a>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+            @endif
         </div>
     </header>
     <div>
@@ -22,6 +27,7 @@
             <div class="row">
                 <div class="col col-12 col-md-3">
                     <ul class="nav nav-pills flex-column mb-auto">
+                        @auth
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link link-dark">Главная</a>
                         </li>
@@ -34,6 +40,11 @@
                         <li>
                             <a href="{{ route('videos.index') }}" class="nav-link link-dark">Видео</a>
                         </li>
+                        @else
+                        <li>
+                            <a href="{{ '/' }}" class="nav-link link-dark">Блог</a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
