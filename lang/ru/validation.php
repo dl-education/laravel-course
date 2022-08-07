@@ -122,4 +122,5 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'allInModel' => 'Не все выбранные элементы были найдены'
 ];
