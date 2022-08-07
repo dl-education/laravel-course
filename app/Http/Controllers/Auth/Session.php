@@ -18,6 +18,7 @@ class Session extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
+        session()->flash('notification','auth.login');
         return redirect()->route('home');
     }
 
