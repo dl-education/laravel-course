@@ -16,7 +16,8 @@
         <div class="container py-3 mb-4 border-bottom">
             header
             @auth
-                <a href="{{ route('login.exit') }}">Logout</a>
+                <div><a href="{{ route('login.exit') }}">Logout</a></div>
+                <div><a href="{{ route('change.password') }}">Change password</a></div>
             @else
                 <a href="{{ route('login') }}">Login</a> or <a href="{{ route('register') }}">Registration</a>
             @endif

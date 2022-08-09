@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ChangePassword;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tags;
 use App\Http\Controllers\Posts;
@@ -37,6 +38,13 @@ Route::controller(RegisteredUser::class)->group(function(){
     Route::middleware('guest')->group(function(){
         Route::get('/auth/register', 'create')->name('register');
         Route::post('/auth/register', 'store');//->name('register');
+    });
+});
+
+Route::controller(ChangePassword::class)->group(function(){
+    Route::middleware('auth')->group(function(){
+        Route::get('/auth/change-password', 'create')->name('change.password');
+        Route::post('/auth/change-password', 'store')->name('store.password');
     });
 });
 
