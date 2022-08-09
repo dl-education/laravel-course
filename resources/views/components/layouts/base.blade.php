@@ -18,7 +18,7 @@
             @auth
                 <a href="{{ route('login.exit') }}">Logout</a>
             @else
-                <a href="{{ route('login') }}">Login</a>
+                <a href="{{ route('login') }}">Login</a> or <a href="{{ route('register') }}">Registration</a>
             @endif
         </div>
     </header>
