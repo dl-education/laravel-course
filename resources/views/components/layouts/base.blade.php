@@ -31,14 +31,22 @@
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link link-dark">Главная</a>
                         </li>
+                        @can('admin-tags')
                         <li class="nav-item">
                             <a href="{{ route('tags.index') }}" class="nav-link link-dark">Теги</a>
                         </li>
+                        @endif
                         <li class="nav-item">
                             <a href="{{ route('posts.index') }}" class="nav-link link-dark">Блог</a>
                         </li>
                         <li>
                             <a href="{{ route('videos.index') }}" class="nav-link link-dark">Видео</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile.password.edit') }}" class="nav-link link-dark">Смена пароля</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('address.form') }}" class="nav-link link-dark">Анализ адреса</a>
                         </li>
                         @else
                         <li>
@@ -48,6 +56,9 @@
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
+                    @if(!auth()->user()->email_verified_at)
+                        <div class="alert alert-danger">Подтверди почту!!!!</div>
+                    @endif
                     <x-notifications />
                     <h1 class="h3 mb-4">{{ $title }}</h1>
                     {{ $slot }}

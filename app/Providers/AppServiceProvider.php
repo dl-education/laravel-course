@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Paginator::useBootstrap();
+        Paginator::useBootstrapFive();
        /*  DB::beforeExecuting(function($sql, $params){
             ob_start();
             echo  "<pre>";
