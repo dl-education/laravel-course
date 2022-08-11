@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Post;
-use App\Models\Tag;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
-            $table->foreignIdFor(Post::class)->constrained();
-            $table->foreignIdFor(Tag::class)->constrained();
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Role::class)->constrained();
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('role_user');
     }
 };

@@ -122,7 +122,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
             'password' => 'пароль',
-            'current_password' => 'текущий пароль'
+            'current' => 'текущий пароль'
         ],
     ],
 ];

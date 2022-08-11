@@ -11,7 +11,8 @@ class Video extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'code'
+        'code',
+        'slug'
     ];
 
     public function comments()

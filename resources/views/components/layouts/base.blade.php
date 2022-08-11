@@ -27,16 +27,22 @@
                 <div class="col col-12 col-md-3">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <x-nav.navlink route-name="home">Главная</x-nav.navlink>
-                        @auth
-                            <x-nav.navlink route-name="main.admin" >Администрирование</x-nav.navlink>    
-                        @endauth
+                        @can('admin')
+                            <x-nav.navlink route-name="main.admin" >Администрирование</x-nav.navlink>
+                        @endcan    
                         <x-nav.navlink route-name="tags.all" >Теги</x-nav.navlink>
                         <x-nav.navlink route-name="post.all" >Посты</x-nav.navlink>
                         <x-nav.navlink route-name="video.all" >Видео</x-nav.navlink>
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
-                    
+                   @auth
+                        @if(!auth()->user()->email_verified_at)
+                            <div class="alert alert-info" role="alert">
+                                Активируйте учетную запись!
+                            </div>
+                        @endif
+                   @endauth
                     <x-admin.notifications/>
                     <h1 class="h3 mb-4">{{ $title }}</h1>
                     {{ $slot }}

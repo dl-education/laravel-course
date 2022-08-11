@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Profile;
 
-use App\Rules\CheckUserPassword;
+
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
 class PasswordUpdate extends FormRequest
 {
@@ -25,16 +26,16 @@ class PasswordUpdate extends FormRequest
     public function rules()
     {
         return [
-            'current_password' => ['required', new CheckUserPassword() ],
-            'password' => ['required', 'confirmed'],
+            'current' => 'required|current_password',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 
     public function attributes()
     {
         return [
-            'current_password' => 'текущий пароль',
-            'password' => 'новый пароль'
+            'current' => 'текущий пароль',
+            'password' => 'новый пароль',
         ];
     }
 

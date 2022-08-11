@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('url', 64)->unique();
-            $table->string('title', 64)->unique();
-            $table->text('description')->nullable();
             $table->timestamps();
+            $table->string('name',32)->unique();
+            $table->string('description',128);
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('roles');
     }
 };

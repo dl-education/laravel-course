@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Enums\Roles\Status as RoleStatus;
+use Illuminate\Support\Facades\Gate;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +27,22 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('admin', function($user){
+            return !$user->roles()->where('name', RoleStatus::USER)->count();
+        });
+
+        Gate::define('admin-main', function($user){
+            return $user->roles()->where('name', RoleStatus::ADMIN)->count() > 0;
+        });
+
+        Gate::define('admin-moderator', function($user){
+            return $user->roles()->where('name', RoleStatus::MODER)->count() > 0;
+        });
+
+        Gate::define('admin-bloger', function($user){
+            return $user->roles()->where('name', RoleStatus::BLOGER)->count() > 0;
+        });
+
+        
     }
 }

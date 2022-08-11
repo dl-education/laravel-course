@@ -32,8 +32,8 @@ class Store extends FormRequest
     public function attributes()
     {
         return [
+            'slug' => 'Идентификатор видео',
             'code' => 'Видео код',
-            'slug' => 'Идентификатор видео'
         ];
     }
 }

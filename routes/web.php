@@ -21,26 +21,31 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::prefix('/admin')->middleware(['auth','verified'])->group( function () {
+Route::prefix('/admin')->middleware(['auth','verified','can:admin'])->group( function () {
     Route::get('/', [ MainAdminController::class, 'index' ])->name('main.admin');
-    Route::get('/declinedComments', [ MainAdminController::class, 'declinedComments'])->name('comment.declined');
-    Route::get('/newComments', [ MainAdminController::class, 'showNewComments'])->name('comment.new');
-    Route::get('/acceptedComments', [ MainAdminController::class, 'acceptedComments'])->name('comment.accepted');
-    Route::get('/comment/{id}/accept', [ MainAdminController::class, 'acceptComment'])->name('accept.comment');
-    Route::get('/comment/{id}/decline', [ MainAdminController::class, 'declineComment'])->name('decline.comment');
+    Route::middleware('can:admin-moderator')->group( function() {
+            Route::get('/declinedComments', [ MainAdminController::class, 'declinedComments'])->name('comment.declined');
+            Route::get('/newComments', [ MainAdminController::class, 'showNewComments'])->name('comment.new');
+            Route::get('/acceptedComments', [ MainAdminController::class, 'acceptedComments'])->name('comment.accepted');
+            Route::get('/comment/{id}/accept', [ MainAdminController::class, 'acceptComment'])->name('accept.comment');
+            Route::get('/comment/{id}/decline', [ MainAdminController::class, 'declineComment'])->name('decline.comment');
+        });
+    Route::middleware('can:admin-main')->group( function() {
         Route::prefix('/trush')->group( function () {
             Route::get('/', [ TrushCategoryController::class, 'index'])->name('trush');
             Route::delete('/{id}/deleteForever', [ TrushCategoryController::class, 'deleteForever'])->name('deleteForever');
             Route::put('/restoreOne', [ TrushCategoryController::class, 'restoreOne'])->name('restoreOne');
             Route::post('/restoreAll', [ TrushCategoryController::class, 'restoreAll'])->name('restoreAll');
             Route::delete('/deleteAll', [ TrushCategoryController::class, 'deleteAll'])->name('deleteAll');
+        Route::resource('/categories', CategoryAdminController::class);
+        Route::resource('/tags', TagsAdminController::class)->parameters(['tags' => 'id']);
         });
-    Route::resource('/categories', CategoryAdminController::class);
-    Route::resource('/posts', PostsAdminController::class)->parameters(['posts' => 'id']);
-    Route::resource('/video', VideoAdminController::class)->parameters(['video' => 'id']);
-    Route::resource('/tags', TagsAdminController::class)->parameters(['tags' => 'id']);
-      
-});
+        Route::middleware('can:admin-bloger')->group( function() {
+            Route::resource('/posts', PostsAdminController::class)->parameters(['posts' => 'id']);
+            Route::resource('/video', VideoAdminController::class)->parameters(['video' => 'id']);
+        });  
+    });
+ });
 
 Route::resource('/comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy'])->parameters([ 'comments' => 'id' ])->middleware(['auth']);
 
@@ -63,8 +68,7 @@ Route::controller(SessionController::class)->group(function() {
 });
 
 Route::get('verify-email', function () {
-    session()->flash('notification','auth.verify');
-    return redirect()->route('home');
+    return redirect()->route('home')->with('notification','auth.verify');
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
