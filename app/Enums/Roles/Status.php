@@ -5,6 +5,6 @@ enum Status:string
 {
     case ADMIN = 'admin';
     case MODER = 'moderator';
-    case BLOGER = 'writer';
+    case WRITER = 'writer';
     case USER = 'user';
 }

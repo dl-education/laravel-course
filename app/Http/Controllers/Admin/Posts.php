@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\Comment\Status as CommentStatus;
 use App\Http\Requests\Posts\Save as SaveRequest;
 use App\Models\Post as MPost;
 use App\Enums\Post\Status as PostStatus;
@@ -70,9 +69,19 @@ class Posts extends Controller
         return redirect()->route('posts.index');
     }
 
-    /* public function approve($id){
-        $post = Post::findOrFail($id);
+    public function approve($id)
+    {
+        $post = MPost::findOrFail($id);
         $post->status = PostStatus::APPROVED;
         $post->save();
-    } */
+        return redirect()->route('posts.index')->with('notification', 'post.approved');
+    } 
+
+    public function rejected($id)
+    {
+        $post = MPost::findOrFail($id);
+        $post->status = PostStatus::REJECTED;
+        $post->save();
+        return redirect()->route('posts.index')->with('notification', 'post.rejected');
+    } 
 }

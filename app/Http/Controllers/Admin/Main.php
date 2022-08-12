@@ -50,4 +50,5 @@ class Main extends Controller
         $comment->save();
         return redirect()->back();
     }
+    
 }

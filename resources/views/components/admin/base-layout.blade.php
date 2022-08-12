@@ -3,8 +3,9 @@
       @can('admin-main')
         <x-nav.navlink route-name="categories.index">Категории</x-nav.navlink>
         <x-nav.navlink route-name="tags.index" >Теги</x-nav.navlink>
+        <x-nav.navlink route-name="users.index" >Пользователи</x-nav.navlink>       
       @endcan
-      @can('admin-bloger')
+      @can('admin-writer')
       <x-nav.navlink route-name="posts.index" >Посты</x-nav.navlink>
       <x-nav.navlink route-name="video.index" >Видео</x-nav.navlink>
       @endcan
