@@ -24,5 +24,13 @@ return [
     'password.change' => [
         'type' => 'info',
         'text' => 'Пароль успешно изменен'
+    ],
+    'post.approved' => [
+        'type' => 'success',
+        'text' => 'Пост одобрен'
+    ],
+    'post.rejected' => [
+        'type' => 'danger',
+        'text' => 'Пост отклонен'
     ]
 ];

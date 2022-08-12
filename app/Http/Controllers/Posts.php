@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Comment\Status as CommentStatus;
+use App\Enums\Post\Status as PostStatus;
 use App\Models\Comment;
 use App\Models\Post as MPost;
 use App\Models\Tag as MTag;
@@ -11,7 +12,7 @@ class Posts extends Controller
 {
     public function index()
     {
-        return view('user.posts.index', ['posts' => MPost::withCount('comments')->orderByDesc('created_at')->paginate(5)]);
+        return view('user.posts.index', ['posts' => MPost::where('status', PostStatus::APPROVED)->withCount('comments')->orderByDesc('created_at')->paginate(5)]);
     }
 
     public function show($slug)

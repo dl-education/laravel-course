@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->roles()->where('name', RoleStatus::MODER)->count() > 0;
         });
 
-        Gate::define('admin-bloger', function($user){
+        Gate::define('admin-writer', function($user){
             return $user->roles()->where('name', RoleStatus::WRITER)->count() > 0;
         });
 

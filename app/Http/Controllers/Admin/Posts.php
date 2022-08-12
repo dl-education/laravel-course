@@ -15,6 +15,7 @@ class Posts extends Controller
     {
         return view('admin.posts.index', [ 
             'posts' => MPost::orderByDesc('created_at')->paginate(5),
+            'newPosts' => MPost::where('status', PostStatus::DRAFT)->orderByDesc('created_at')->get(),
         ]);
     }
 
@@ -77,7 +78,7 @@ class Posts extends Controller
         return redirect()->route('posts.index')->with('notification', 'post.approved');
     } 
 
-    public function rejected($id)
+    public function reject($id)
     {
         $post = MPost::findOrFail($id);
         $post->status = PostStatus::REJECTED;

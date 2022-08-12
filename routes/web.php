@@ -29,6 +29,8 @@ Route::prefix('/admin')->middleware(['auth','verified','can:admin'])->group( fun
             Route::get('/acceptedComments', [ MainAdminController::class, 'acceptedComments'])->name('comment.accepted');
             Route::get('/comment/{id}/accept', [ MainAdminController::class, 'acceptComment'])->name('accept.comment');
             Route::get('/comment/{id}/decline', [ MainAdminController::class, 'declineComment'])->name('decline.comment');
+            Route::get('/posts/{id}/approve', [ PostsAdminController::class, 'approve' ])->name('accept.post');
+            Route::get('/posts/{id}/reject', [ PostsAdminController::class, 'reject' ])->name('decline.post');
         });
     Route::middleware('can:admin-main')->group( function() {
         Route::prefix('/trush')->group( function () {
@@ -40,7 +42,7 @@ Route::prefix('/admin')->middleware(['auth','verified','can:admin'])->group( fun
         Route::resource('/categories', CategoryAdminController::class);
         Route::resource('/tags', TagsAdminController::class)->parameters(['tags' => 'id']);
         });
-        Route::middleware('can:admin-bloger')->group( function() {
+        Route::middleware('can:admin-writer')->group( function() {
             Route::resource('/posts', PostsAdminController::class)->parameters(['posts' => 'id']);
             Route::resource('/video', VideoAdminController::class)->parameters(['video' => 'id']);
         });  
