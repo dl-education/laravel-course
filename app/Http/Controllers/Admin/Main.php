@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\Comment\Status as CommentStatus;
+use App\Enums\Roles\Status as RoleStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Role as RoleRequest;
 use App\Models\Comment as MComment;
+use App\Models\Role as MRole;
+use App\Models\User as MUSer;
 
 class Main extends Controller
 {
@@ -50,5 +54,27 @@ class Main extends Controller
         $comment->save();
         return redirect()->back();
     }
-    
+
+    public function users()
+    {
+        return view('admin.userRole.index', ['users' => MUser::with('roles')->paginate(10)]);
+    }
+
+    public function editRole($id)
+    {
+        $roles = collect();
+        $user = MUser::findOrFail($id);
+        $role = MRole::get();
+        $role->each( function ($role) use ($roles) {
+            $roles->put($role->id, $role->name->text());
+        });
+        return view('admin.userRole.role-edit', compact('user', 'roles'));
+    }
+
+    public function updateRole(RoleRequest $request, $id)
+    {
+        $user = MUser::findOrFail($id);
+        $user->roles()->sync($request['roles']);
+        return redirect()->route('users.index');
+    }
 }

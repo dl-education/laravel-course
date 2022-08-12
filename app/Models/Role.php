@@ -11,7 +11,7 @@ class Role extends Model
     use HasFactory;
 
     protected $casts = [
-        'status' => Status::class,
+        'name' => Status::class,
     ];
 
     public function users()

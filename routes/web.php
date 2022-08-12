@@ -38,15 +38,20 @@ Route::prefix('/admin')->middleware(['auth','verified','can:admin'])->group( fun
             Route::delete('/{id}/deleteForever', [ TrushCategoryController::class, 'deleteForever'])->name('deleteForever');
             Route::put('/restoreOne', [ TrushCategoryController::class, 'restoreOne'])->name('restoreOne');
             Route::post('/restoreAll', [ TrushCategoryController::class, 'restoreAll'])->name('restoreAll');
-            Route::delete('/deleteAll', [ TrushCategoryController::class, 'deleteAll'])->name('deleteAll');
+            Route::delete('/deleteAll', [ TrushCategoryController::class, 'deleteAll'])->name('deleteAll');   
+        });
+        Route::prefix('/users')->group( function () {
+            Route::get('/', [MainAdminController::class, 'users'])->name('users.index');
+            Route::get('/role/{id}/edit', [ MainAdminController::class, 'editRole'])->name('user.role.edit');
+            Route::put('/role/{id}/update', [ MainAdminController::class, 'updateRole'])->name('user.role.update');
+        });
         Route::resource('/categories', CategoryAdminController::class);
         Route::resource('/tags', TagsAdminController::class)->parameters(['tags' => 'id']);
-        });
-        Route::middleware('can:admin-writer')->group( function() {
-            Route::resource('/posts', PostsAdminController::class)->parameters(['posts' => 'id']);
-            Route::resource('/video', VideoAdminController::class)->parameters(['video' => 'id']);
-        });  
     });
+    Route::middleware('can:admin-writer')->group( function() {
+        Route::resource('/posts', PostsAdminController::class)->parameters(['posts' => 'id']);
+        Route::resource('/video', VideoAdminController::class)->parameters(['video' => 'id']);
+    });  
  });
 
 Route::resource('/comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy'])->parameters([ 'comments' => 'id' ])->middleware(['auth']);
