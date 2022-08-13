@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\Roles\Status as RoleStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Register as RegisterRequest;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +23,7 @@ class Register extends Controller
        $data['password'] = Hash::make($data['password']);
        $user = User::create($data);
        event(new Registered($user));
-       $user->roles()->attach(RoleStatus::USER->byId());
+       $user->roles()->sync(RoleStatus::USER->byId());
        Auth::login($user);
        return redirect()->route('home')->with('notification','auth.register');
     }

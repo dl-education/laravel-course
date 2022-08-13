@@ -11,6 +11,7 @@ use App\Models\Tag as MTag;
 
 class Posts extends Controller
 {
+
     public function index()
     {
         return view('admin.posts.index', [ 
@@ -28,7 +29,7 @@ class Posts extends Controller
 
     public function store(SaveRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->validated() + [ 'user_id' => auth()->id() ];
         $post = MPost::create($data);
         $post->tags()->sync($data['tags']);
         return redirect()->route('posts.show', [ $post->id ]);
@@ -37,21 +38,15 @@ class Posts extends Controller
     public function show($id)
     {
         $post = MPost::with('comments')->findOrFail($id);
-        // id($post->status !== PostStatus::APPROVED) 404
         return view('admin.posts.show', compact('post'));
     }
 
     public function edit($id)
     {
+        $this->authorize('edit', MPost::findOrfail($id));
         $post = MPost::findOrFail($id);
         $categories = MCategory::pluck('name','id');
         $tags = MTag::orderByDesc('title')->pluck('title','id');
-        /* var_dump($post->options);
-        $post->options = [
-            ['title' => 'Weight', 'value' => 100],
-            ['title' => 'Height', 'value' => 200]
-        ];
-        $post->save(); */
         return view('admin.posts.edit', compact('post','categories','tags'));
     }
 

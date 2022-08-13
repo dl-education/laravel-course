@@ -39,5 +39,18 @@
                     {{ $posts->links() }}
                 </div>
             @endcan
+            @can('admin-writer')
+            <div>
+                <h1>Мои посты</h1>
+                <hr>
+                    @foreach(auth()->user()->posts as $post)
+                        <h2>{{ $post->title }}</h2>
+                        <a href="{{ route('posts.show', $post->id) }}">подробнее...</a>
+                        <p>{{ $post->status->text() }}</p>
+                        <hr>
+                    @endforeach
+                {{ $posts->links() }}
+            </div>
+            @endcan
     </x-admin.base-layout>
 </x-layouts.base>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Posts;
 
+use App\Models\Post as MPost;
 use App\Models\Tag as MTag;
 use App\Rules\CheckArray;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class Save extends FormRequest
 {
@@ -15,7 +17,7 @@ class Save extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->route('id') ? Gate::allows('edit', MPost::findOrfail($this->route('id'))) : true;
     }
 
     /**

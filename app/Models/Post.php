@@ -16,7 +16,8 @@ class Post extends Model
         'title',
         'content',
         'slug',
-        'category_id'
+        'category_id',
+        'user_id'
     ];
 
     protected $casts = [
@@ -24,7 +25,7 @@ class Post extends Model
         'options' => Base64Json::class
     ];
 
-    public function category ()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
@@ -37,5 +38,10 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
