@@ -24,7 +24,7 @@
                         @endforelse
                 </div>
             @endcan
-            @can('admin-main')
+            @can('admin-moderator')
                 <div>
                     <h1>Все посты</h1>
                     <hr>
@@ -43,12 +43,15 @@
             <div>
                 <h1>Мои посты</h1>
                 <hr>
-                    @foreach(auth()->user()->posts as $post)
+                    @forelse(auth()->user()->posts as $post)
                         <h2>{{ $post->title }}</h2>
                         <a href="{{ route('posts.show', $post->id) }}">подробнее...</a>
                         <p>{{ $post->status->text() }}</p>
-                        <hr>
-                    @endforeach
+                        
+                    @empty
+                    <em>Постов нет</em>
+                    @endforelse
+                    <hr>
                 {{ $posts->links() }}
             </div>
             @endcan
