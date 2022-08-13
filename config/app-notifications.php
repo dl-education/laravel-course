@@ -11,6 +11,6 @@ return [
     ],
     'password.changed' => [
         'type' => 'success',
-        'text' => 'Пароль был успешно изменен'
+        'text' => 'Пароль успешно изменён!'
     ]
 ];

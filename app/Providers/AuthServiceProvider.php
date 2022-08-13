@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -34,6 +34,8 @@ class AuthServiceProvider extends ServiceProvider
                 : $rule;
         });
 
-        //
+        Gate::define('admin-tags', function($user){
+            return $user->roles()->where('name', 'admin')->count() > 0;
+        });
     }
 }
