@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\Save as SaveRequest;
+use App\Http\Requests\Posts\Update as UpdateRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Enums\Post\Status as PostStatus;
 
 class Posts extends Controller
 {
+    // public function __construct() {
+    //     $this->authorizeResource(Post::class, 'post');
+    // }
+
     public function index()
     {
         $posts = Post::withCount('comments')->orderByDesc('created_at')->paginate(3);
@@ -25,6 +30,7 @@ class Posts extends Controller
     public function store(SaveRequest $request)
     {
         $data = $request->validated();
+        $data = [...$data, 'user_id' => $request->user()->id];
         $post = Post::create($data);
         $post->tags()->sync($data['tags']);
         return redirect()->route('posts.show', [ $post->id ]);
@@ -43,7 +49,7 @@ class Posts extends Controller
         return view('posts.edit', compact('post', 'tags'));
     }
 
-    public function update(SaveRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $data = $request->validated();
         $post = Post::findOrFail($id);

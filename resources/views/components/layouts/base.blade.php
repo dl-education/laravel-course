@@ -59,9 +59,11 @@
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
-                    <!-- @if(!auth()->user()->email_verified_at)
-                        <div class="alert alert-danger">Подтверди почту!!!!</div>
-                    @endif -->
+                    @auth
+                        @if(!auth()->user()->email_verified_at)
+                            <div class="alert alert-danger">Подтверди почту!!!!</div>
+                        @endif
+                    @endif
                     <x-notifications />
                     <h1 class="h3 mb-4">{{ $title }}</h1>
                     {{ $slot }}

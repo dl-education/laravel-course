@@ -16,6 +16,7 @@ class Save extends FormRequest
     public function authorize()
     {
         return true;
+        // return Gate::allows('admin-tags');
     }
 
     /**
