@@ -31,11 +31,14 @@
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link link-dark">Главная</a>
                         </li>
-                        @can('admin-tags')
-                        <li class="nav-item">
-                            <a href="{{ route('tags.index') }}" class="nav-link link-dark">Теги</a>
-                        </li>
-                        @endif
+                            @can('admin-tags')
+                            <li class="nav-item">
+                                <a href="{{ route('tags.index') }}" class="nav-link link-dark">Теги</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}" class="nav-link link-dark">Пользователи</a>
+                            </li>
+                            @endif
                         <li class="nav-item">
                             <a href="{{ route('posts.index') }}" class="nav-link link-dark">Блог</a>
                         </li>
@@ -56,9 +59,9 @@
                     </ul>
                 </div>
                 <main class="col col-12 col-md-9">
-                    @if(!auth()->user()->email_verified_at)
+                    <!-- @if(!auth()->user()->email_verified_at)
                         <div class="alert alert-danger">Подтверди почту!!!!</div>
-                    @endif
+                    @endif -->
                     <x-notifications />
                     <h1 class="h3 mb-4">{{ $title }}</h1>
                     {{ $slot }}
