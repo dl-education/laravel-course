@@ -37,5 +37,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin-tags', function($user){
             return $user->roles()->where('name', 'admin')->count() > 0;
         });
+
+        Gate::define('admin-users', function($user){
+            return $user->roles()->where('name', 'admin')->count() > 0;
+        });
     }
 }

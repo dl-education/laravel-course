@@ -49,6 +49,11 @@
                             <li>
                                 <a href="{{ route('address.form') }}" class="nav-link link-dark">Анализ адреса</a>
                             </li>
+                            @can('admin-users')
+                            <li>
+                                <a href="{{ route('users.index') }}" class="nav-link link-dark">Пользователи</a>
+                            </li>
+                            @endif
                         @else
                             <li>
                                 <a href="{{ '/' }}" class="nav-link link-dark">Блог</a>

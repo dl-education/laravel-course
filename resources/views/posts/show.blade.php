@@ -1,5 +1,5 @@
 <x-layouts.base :title="$post->title">
-    <x-tags :tags="$post->tags"/>
+    {{-- <x-tags :tags="$post->tags"/> --}}
     <div>{{ $post->status->text() }}</div>
     <a href="/posts">Back</a>
     <hr>

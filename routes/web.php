@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUser;
 use App\Http\Controllers\Blog;
 use App\Http\Controllers\Profile\Password as ProfilePassword;
 use App\Http\Controllers\Address;
+use App\Http\Controllers\Users;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,12 @@ Route::middleware('auth', 'verified')->prefix('admin')->group(function(){
     Route::controller(ProfilePassword::class)->prefix('profile')->withoutMiddleware('verified')->group(function(){
         Route::get('/password', 'edit')->name('profile.password.edit');
         Route::put('/password', 'update')->name('profile.password.update');
+    });
+    
+    Route::controller(Users::class)->middleware('can:admin-users')->group(function(){
+        Route::get('/users', 'index')->name('users.index');
+        Route::get('/users/{id}/roles', 'editRoles')->name('users.roles.edit');
+        Route::put('/users/{id}/roles', 'updateRoles')->name('users.roles.update');
     });
 
     Route::controller(Address::class)->group(function(){
