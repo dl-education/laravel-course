@@ -35,5 +35,15 @@ class AppServiceProvider extends ServiceProvider
             $log = ob_get_clean();
             file_put_contents('1.log', $log . "\n\n", FILE_APPEND);
         }); */
+
+/*         DB::beforeExecuting(function($sql, $params){
+            echo  "<pre>";
+            print_r($sql);
+            print_r($params);
+            echo "</pre>";
+        });
+       DB::beforeExecuting(function($sql, $params){
+           dump($sql);
+        }); */
     }
 }

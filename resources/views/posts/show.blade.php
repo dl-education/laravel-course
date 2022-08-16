@@ -1,10 +1,13 @@
 <x-layouts.base :title="$post->title">
+    {{-- <x-tags :tags="$post->tags"/> --}}
     <div>{{ $post->status->text() }}</div>
     <a href="/posts">Back</a>
     <hr>
     <em>{{ $post->created_at }}</em>
     <div>{{ $post->content }}</div>
+    @can('update', $post)
     <a href="{{ route('posts.edit', [ $post->id ]) }}">Edit</a>
+    @endcan
     <hr>
     <h2>Comments</h2>
     <x-comments.form for="post" :id="$post->id" />

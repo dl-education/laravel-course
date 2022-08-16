@@ -6,6 +6,8 @@ use App\Http\Requests\Posts\Save as SaveRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Enums\Post\Status as PostStatus;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class Posts extends Controller
 {
@@ -17,6 +19,8 @@ class Posts extends Controller
 
     public function create()
     {
+        $this->authorize('create', self::class);
+
         return view('posts.create', [
             'tags' => Tag::orderByDesc('title')->pluck('title', 'id')
         ]);
@@ -24,9 +28,12 @@ class Posts extends Controller
 
     public function store(SaveRequest $request)
     {
+        $this->authorize('create', self::class);
+
         $data = $request->validated();
-        $post = Post::create($data);
+        $post = $request->user()->posts()->create($data);
         $post->tags()->sync($data['tags']);
+
         return redirect()->route('posts.show', [ $post->id ]);
     }
 
@@ -39,6 +46,9 @@ class Posts extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+
+        $this->authorize('update', [$post]);
+
         $tags = Tag::orderByDesc('title')->pluck('title', 'id');
         return view('posts.edit', compact('post', 'tags'));
     }
@@ -47,6 +57,8 @@ class Posts extends Controller
     {
         $data = $request->validated();
         $post = Post::findOrFail($id);
+
+        $this->authorize('update', [$post]);
         $post->update($data);
         $post->tags()->sync($data['tags']);
         return redirect()->route('posts.show', [ $post->id ]);
