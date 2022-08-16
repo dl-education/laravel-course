@@ -10,9 +10,9 @@ use App\Enums\Post\Status as PostStatus;
 
 class Posts extends Controller
 {
-    // public function __construct() {
-    //     $this->authorizeResource(Post::class, 'post');
-    // }
+    public function __construct() {
+        $this->authorizeResource(Post::class, 'post');
+    }
 
     public function index()
     {

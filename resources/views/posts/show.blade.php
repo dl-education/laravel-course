@@ -4,7 +4,9 @@
     <hr>
     <em>{{ $post->created_at }}</em>
     <div>{{ $post->content }}</div>
+    @can('update', $post)
     <a href="{{ route('posts.edit', [ $post->id ]) }}">Edit</a>
+    @endcan
     <hr>
     <h2>Comments</h2>
     <x-comments.form for="post" :id="$post->id" />

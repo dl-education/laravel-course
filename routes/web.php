@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware('auth', 'verified')->prefix('admin')->group(function(){
-    Route::resource('users', Users::class)->parameters(['users' => 'id'])->middleware('can:admin-tags');
+    Route::resource('users', Users::class)->parameters(['users' => 'id'])->middleware('can:admin');
     Route::resource('tags', Tags::class)->parameters(['tags' => 'id'])->middleware('can:admin-tags');
     Route::resource('posts', Posts::class)->parameters(['posts' => 'id']);
     Route::resource('videos', Videos::class)->parameters(['videos' => 'id']);
