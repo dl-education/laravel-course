@@ -53,7 +53,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->id == $post->user_id;
+        return $user->id == $post->user_id or $user->roles()->whereIn('name', ['admin', 'moderator'])->count() > 0;
     }
 
     /**
@@ -65,7 +65,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return $user->id == $post->user_id;
+        return $this->update($user, $post);
     }
 
     /**
@@ -77,7 +77,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post)
     {
-        return true;
+        return $user->roles()->whereIn('name', 'admin')->count() > 0;
     }
 
     /**
@@ -89,6 +89,6 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post)
     {
-        return true;
+        return $user->roles()->whereIn('name', 'admin')->count() > 0;
     }
 }
