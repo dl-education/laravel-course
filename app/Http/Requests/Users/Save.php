@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Posts;
+namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\AllInModel;
-use App\Models\Tag;
+use App\Models\Role;
 
 class Save extends FormRequest
 {
@@ -15,8 +15,8 @@ class Save extends FormRequest
      */
     public function authorize()
     {
-        return false;
-        // return true;
+        return true;
+        // return Gate::allows('admin-tags');
     }
 
     /**
@@ -27,18 +27,18 @@ class Save extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:10',
-            'content' => 'required|max:256',
-            'tags' => [ 'required', 'array', 'min:1', new AllInModel(Tag::class) ]
+            'name' => 'required|min:10',
+            'email' => 'required|max:256',
+            'roles' => [ 'required', 'array', 'min:1', new AllInModel(Role::class) ]
         ];
     }
 
     public function attributes()
     {
         return [
-            'title' => 'Заголовок',
-            'content' => 'Текст поста',
-            'tags' => 'Список тегов'
+            'name' => 'Имя',
+            'email' => 'Почта',
+            'roles' => 'Список ролей'
         ];
     }
 

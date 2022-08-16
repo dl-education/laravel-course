@@ -5,6 +5,7 @@
         <h2>{{ $post->title }}</h2>
         <em>{{ $post->created_at }}</em><br>
         <a href="{{ route('posts.show', [ $post->id ] ) }}">more...</a>
+        <div>user: {{ $post->user->id }} {{ $post->user->name }}</div>
         <div>commets: {{ $post->comments_count }}</div>
         <hr>
     @endforeach

@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use App\Models\Post;
+use App\Policies\PostPolicy;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -12,9 +15,9 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
-    protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-    ];
+    // protected $policies = [
+    //     Post::class => PostPolicy::class,
+    // ];
 
     /**
      * Register any authentication / authorization services.
@@ -26,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin-tags', function($user){
+            return $user->roles()->where('name', 'admin')->count() > 0;
+        });
+
+        Gate::define('admin', function($user){
             return $user->roles()->where('name', 'admin')->count() > 0;
         });
     }
