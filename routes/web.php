@@ -18,7 +18,8 @@ Route::get('/', function () {
 Route::middleware('auth', 'verified')->prefix('admin')->group(function(){
     Route::resource('users', Users::class)->parameters(['users' => 'id'])->middleware('can:admin');
     Route::resource('tags', Tags::class)->parameters(['tags' => 'id'])->middleware('can:admin-tags');
-    Route::resource('posts', Posts::class)->parameters(['posts' => 'id']);
+    Route::resource('posts', Posts::class);
+    // Route::resource('posts', Posts::class)->parameters(['posts' => 'id']);
     Route::resource('videos', Videos::class)->parameters(['videos' => 'id']);
 
     Route::controller(ProfilePassword::class)->prefix('profile')->withoutMiddleware('verified')->group(function(){

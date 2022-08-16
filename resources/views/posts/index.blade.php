@@ -5,9 +5,6 @@
         <h2>{{ $post->title }}</h2>
         <em>{{ $post->created_at }}</em><br>
         <a href="{{ route('posts.show', [ $post->id ] ) }}">more...</a>
-        @can('view', $post)
-            <div>Могу просматривать</div>
-        @endcan
         <div>user: {{ $post->user->id }} {{ $post->user->name }}</div>
         <div>commets: {{ $post->comments_count }}</div>
         <hr>
