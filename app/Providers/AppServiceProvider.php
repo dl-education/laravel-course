@@ -15,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //$this->app->bind(\App\Services\Sms\SmsSenderInterface::class, \App\Services\Sms\LogsStub::class);
+        $this->app->bind(\App\Services\Sms\SmsSenderInterface::class, \App\Services\Sms\SMSAero::class);
     }
 
     /**
