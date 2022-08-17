@@ -1,5 +1,5 @@
 <x-layouts.base title="Адрес">
-    <x-form method="post" action="{{ route('address.parse') }}">
+    <x-form method="post" class="address-form">
         <div class="mt-3">
             <x-form-input name="address" label="Адрес для анализа" />
         </div>

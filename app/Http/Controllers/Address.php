@@ -13,7 +13,6 @@ class Address extends Controller
 
     public function parse(Request $request, DadataClient $dadata){
         $response = $dadata->clean('address', $request->address);
-        dd($response);
-        return view('address.result');
+        return $response;
     }
 }

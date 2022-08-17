@@ -33,7 +33,7 @@ Route::middleware('auth', 'verified')->prefix('admin')->group(function(){
 
     Route::controller(Address::class)->group(function(){
         Route::get('/address', 'form')->name('address.form');
-        Route::post('/address', 'parse')->name('address.parse');
+        //Route::post('/address', 'parse')->name('address.parse');
     });
 });
 
