@@ -6,6 +6,7 @@ use App\Http\Requests\Posts\Save as SaveRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Enums\Post\Status as PostStatus;
+use Illuminate\Support\Facades\Gate;
 
 class Posts extends Controller
 {
@@ -24,8 +25,9 @@ class Posts extends Controller
 
     public function store(SaveRequest $request)
     {
+        Gate::authorize('posts-create');
         $data = $request->validated();
-        $post = Post::create($data);
+        $post = Post::create($data + [ 'user_id' => $request->user()->id ]);
         $post->tags()->sync($data['tags']);
         return redirect()->route('posts.show', [ $post->id ]);
     }
@@ -39,6 +41,7 @@ class Posts extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+        Gate::authorize('posts-edit', $post);
         $tags = Tag::orderByDesc('title')->pluck('title', 'id');
         return view('posts.edit', compact('post', 'tags'));
     }

@@ -9,12 +9,19 @@ use App\Http\Controllers\Auth\Session;
 use App\Http\Controllers\Blog;
 use App\Http\Controllers\Profile\Password as ProfilePassword;
 use App\Http\Controllers\Address;
+use App\Http\Controllers\Users;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
 Route::middleware('auth', 'verified')->prefix('admin')->group(function(){
+    Route::middleware('can:admin-users')->group(function(){
+        Route::resource('users', Users::class)->parameters(['users' => 'id']);
+        Route::get('users/{id}/roles', [ Users::class, 'roles' ])->name('users.roles');
+        Route::put('users/{id}/roles', [ Users::class, 'saveRoles' ]);
+    });
+    
     Route::resource('tags', Tags::class)->parameters(['tags' => 'id'])->middleware('can:admin-tags');
     Route::resource('posts', Posts::class)->parameters(['posts' => 'id']);
     Route::resource('videos', Videos::class)->parameters(['videos' => 'id']);
