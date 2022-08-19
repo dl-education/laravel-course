@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\Comment\Status as CommentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\Store as SaveVideoRequest;
 use App\Models\Video as MVideo;
@@ -12,7 +11,7 @@ class Video extends Controller
    
     public function index()
     {
-        return view('admin.videos.index', ['videos' => MVideo::orderByDesc('created_at')->paginate(5)]);
+        return view('admin.videos.index', ['videos' => MVideo::orderByDesc('created_at')->with('user')->paginate(5)]);
     }
 
    
@@ -24,7 +23,7 @@ class Video extends Controller
    
     public function store(SaveVideoRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->validated() + ['user_id' => auth()->id()];
         $video = MVideo::create($data);
         return redirect()->route('video.show', [ $video->id ]);
     }
@@ -39,6 +38,7 @@ class Video extends Controller
    
     public function edit($id)
     {
+        $this->authorize('update', MVideo::findOrfail($id));
         $video = MVideo::findOrFail($id);
         return view('admin.videos.edit', compact('video'));
     }

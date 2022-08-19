@@ -17,7 +17,8 @@ class Trush extends Controller
 
     public function deleteForever($id)
     {
-        MPost::onlyTrashed()->findOrFail($id)->forceDelete();
+        $post = MPost::onlyTrashed()->findOrFail($id);
+        $post->forceDelete();
         return redirect()->back();
     }
 

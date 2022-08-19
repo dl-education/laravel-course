@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Enums\Roles\Status as RoleStatus;
 use App\Models\Post;
+use App\Models\Video;
 use App\Policies\PostPolicy;
+use App\Policies\VideoPolicy;
 use Illuminate\Support\Facades\Gate;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Post::class => PostPolicy::class,
+        Video::class => VideoPolicy::class,
     ];
 
     /**

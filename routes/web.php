@@ -27,10 +27,10 @@ Route::prefix('/admin')->middleware(['auth','verified','can:admin'])->group( fun
             Route::get('/declinedComments', [ MainAdminController::class, 'declinedComments'])->name('comment.declined');
             Route::get('/newComments', [ MainAdminController::class, 'showNewComments'])->name('comment.new');
             Route::get('/acceptedComments', [ MainAdminController::class, 'acceptedComments'])->name('comment.accepted');
-            Route::get('/comment/{id}/accept', [ MainAdminController::class, 'acceptComment'])->name('accept.comment');
-            Route::get('/comment/{id}/decline', [ MainAdminController::class, 'declineComment'])->name('decline.comment');
-            Route::get('/posts/{id}/approve', [ PostsAdminController::class, 'approve' ])->name('accept.post');
-            Route::get('/posts/{id}/reject', [ PostsAdminController::class, 'reject' ])->name('decline.post');
+            Route::put('/comment/{id}/accept', [ MainAdminController::class, 'acceptComment'])->name('accept.comment');
+            Route::put('/comment/{id}/decline', [ MainAdminController::class, 'declineComment'])->name('decline.comment');
+            Route::put('/posts/{id}/approve', [ PostsAdminController::class, 'approve' ])->name('accept.post');
+            Route::put('/posts/{id}/reject', [ PostsAdminController::class, 'reject' ])->name('decline.post');
         });
     Route::middleware('can:admin-main')->group( function() {
         Route::prefix('/trush')->group( function () {

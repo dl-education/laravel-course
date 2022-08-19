@@ -1,7 +1,10 @@
 <x-layouts.base title="Видео">
     <x-admin.base-layout>
+        @can('update',$video)
         <a href="{{ route('video.edit', [ $video->id ]) }}">Редактировать</a>
         <hr>
+        @endcan
+        <p><em>{{ $video->user->name }}</em></p>
         <iframe width="630" height="400"
                 src="https://www.youtube.com/embed/{{ $video->code }}"
                 fs="0"

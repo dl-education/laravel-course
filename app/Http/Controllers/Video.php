@@ -11,7 +11,7 @@ class Video extends Controller
 {
     public function index()
     {
-        return view('user.videos.index', ['videos' => MVideo::orderByDesc('created_at')->paginate(5)]);
+        return view('user.videos.index', ['videos' => MVideo::orderByDesc('created_at')->with('user')->paginate(5)]);
     }
 
     public function show($slug)

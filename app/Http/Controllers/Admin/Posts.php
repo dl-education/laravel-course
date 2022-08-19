@@ -11,12 +11,11 @@ use App\Models\Tag as MTag;
 
 class Posts extends Controller
 {
-
     public function index()
     {
         return view('admin.posts.index', [ 
-            'posts' => MPost::orderByDesc('created_at')->paginate(5),
-            'newPosts' => MPost::where('status', PostStatus::DRAFT)->orderByDesc('created_at')->get(),
+            'posts' => MPost::orderByDesc('created_at')->with('user')->paginate(5),
+            'newPosts' => MPost::where('status', PostStatus::DRAFT)->with('user')->orderByDesc('created_at')->get(),
         ]);
     }
 

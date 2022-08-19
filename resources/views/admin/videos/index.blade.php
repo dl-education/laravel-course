@@ -12,7 +12,7 @@
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
-                        <a href="{{ route('video.show', $video->id) }}">подробнее...</a>
+                        <span><a href="{{ route('video.show', $video->id) }}">подробнее...</a> - <em>{{ $video->user->name }}</em></span>
                     </div>
                 </div>
             @endforeach

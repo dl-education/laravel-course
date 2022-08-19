@@ -10,6 +10,7 @@
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
                 </iframe>
+                <p><em>{{ $video->user->name }}</em></p>
                 <a href="{{ route('video.one', $video->slug) }}">подробнее...</a>
             </div>
         </div>

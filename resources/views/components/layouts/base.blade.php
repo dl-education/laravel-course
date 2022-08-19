@@ -10,6 +10,12 @@
 <body class="app-grid">
     <header>
         <div class="container py-3 mb-2 border-bottom">
+            @auth
+                <div class="alert alert-info">
+                    Добро пожаловать
+                    <b>{{ auth()->user()->name }} !!!</b>  
+                </div>
+            @endauth
             <ul class="nav nav-pills justify-content-end">
                 @guest
                     <x-nav.navlink route-name="login">Войти</x-nav.navlink>

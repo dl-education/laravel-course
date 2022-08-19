@@ -1,6 +1,7 @@
 <x-layouts.base title="Видео">
     <a href="{{ route('video.all') }}">Назад</a>
     <hr>
+    <p><em>{{ $video->user->name }}</em></p>
     <iframe width="630" height="400"
             src="https://www.youtube.com/embed/{{ $video->code }}"
             fs="0"

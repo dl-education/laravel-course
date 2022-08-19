@@ -4,10 +4,10 @@
             @forelse($comments as $comment)
             <x-admin.comment-item :comment="$comment"> 
                 <div class="btn-group gap-1">
-                    <x-form method='get' action="{{ route('accept.comment', $comment->id) }}">
+                    <x-form method='put' action="{{ route('accept.comment', $comment->id) }}">
                         <button class='btn btn-success btn-sm'>Принять</button>
                     </x-form>
-                    <x-form method='get' action="{{ route('decline.comment', $comment->id) }}">
+                    <x-form method='put' action="{{ route('decline.comment', $comment->id) }}">
                         <button class='btn btn-primary btn-sm'>Отклонить</button>
                     </x-form>
                     <x-form class="text-end" method="delete" action="{{ route('comments.destroy', $comment->id) }}">

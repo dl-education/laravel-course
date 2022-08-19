@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Video;
 
+use App\Models\Video;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class Store extends FormRequest
 {
@@ -13,7 +15,7 @@ class Store extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->route('id') ? Gate::allows('update', Video::findOrfail($this->route('id'))) : true;
     }
 
     /**

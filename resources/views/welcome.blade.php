@@ -7,6 +7,5 @@
         @guest
             <a href="{{ route('login') }}"><button type="button" class="btn btn-success">Войти</button></a>
         @endguest
-       
     </div>
 </x-layouts.base>

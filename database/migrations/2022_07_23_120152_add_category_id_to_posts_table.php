@@ -18,10 +18,10 @@ return new class extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table
                 ->foreignIdFor(Category::class)
-                ->constrained();
+                ->constrained()->onDelete('cascade');
             $table
                 ->foreignIdFor(User::class)
-                ->constrained();
+                ->constrained()->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,7 @@ return new class extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->dropforeignIdFor(Category::class);
+            $table->dropforeignIdFor(User::class);
         });
     }
 };

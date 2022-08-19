@@ -18,7 +18,7 @@ class RootUser extends Seeder
     {
        $data = [
             'name' => 'Admin',
-            'email' => 'admin@yandex.ru',
+            'email' => 'jjnn95@yandex.ru',
             'email_verified_at' => now(),
             'password' =>  Hash::make('admin')
         ];

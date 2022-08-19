@@ -12,7 +12,7 @@ class Posts extends Controller
 {
     public function index()
     {
-        return view('user.posts.index', ['posts' => MPost::where('status', PostStatus::APPROVED)->withCount('comments')->orderByDesc('created_at')->paginate(5)]);
+        return view('user.posts.index', ['posts' => MPost::where('status', PostStatus::APPROVED)->withCount('comments')->with('user')->orderByDesc('created_at')->paginate(5)]);
     }
 
     public function show($slug)
